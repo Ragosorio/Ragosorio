@@ -18,19 +18,6 @@ jobs:
   metrics:
     runs-on: ubuntu-latest
     steps:
-      # Calendario de contribuciones + actividad real
-      - name: Contribuciones
-        uses: lowlighter/metrics@latest
-        with:
-          token: ${{ secrets.METRICS_TOKEN }}
-          user: Ragosorio
-          filename: assets/metrics.svg
-          template: classic
-          base: header, activity, community, repositories
-          config_timezone: America/Guatemala
-          plugin_isocalendar: yes
-          plugin_isocalendar_duration: full-year
-
       # Lenguajes reales agregados sobre TODOS los repos (incluidos privados)
       - name: Lenguajes
         uses: lowlighter/metrics@latest
@@ -42,6 +29,7 @@ jobs:
           config_timezone: America/Guatemala
           plugin_languages: yes
           plugin_languages_sections: most-used
+          plugin_languages_colors: 0:b890d9, 1:a97fd0, 2:9a6ec6, 3:8b5dbc, 4:7c4cb2, 5:6d3ba8
           plugin_languages_details: bytes-size, percentage
           plugin_languages_limit: 10
           # HTML/CSS son mayoria por archivos generados y distorsionan el stack real

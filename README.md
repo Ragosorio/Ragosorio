@@ -108,11 +108,13 @@ Right now I'm at **ROO Guatemala**, where I architected a 26-module multi-tenant
 
 <div align="center">
 
-![Metrics](assets/metrics.svg)
+![Contributions](https://ghchart.rshah.org/b890d9/Ragosorio)
+
+![Streak](https://streak-stats.demolab.com/?user=Ragosorio&hide_border=true&background=090909&ring=b890d9&fire=b890d9&currStreakLabel=b890d9&sideLabels=ffffff&currStreakNum=ffffff&sideNums=ffffff&dates=888888)
 
 ![Languages](assets/languages.svg)
 
-<sub>Regenerado automaticamente cada dia por <a href="../../actions/workflows/metrics.yml">GitHub Actions</a>.</sub>
+<sub>Lenguajes regenerados a diario desde la API por <a href="../../actions/workflows/metrics.yml">GitHub Actions</a>.</sub>
 
 </div>
 

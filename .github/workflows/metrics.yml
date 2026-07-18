@@ -1,8 +1,10 @@
-# Regenera las stats del perfil con datos oficiales de la API de GitHub.
+# Regenera las stats del perfil (calendario de actividad + lenguajes) con
+# datos oficiales de la API de GitHub y la paleta de la marca.
+#
 # Corre solo todos los dias a las 06:00 GMT-6, y se puede lanzar a mano
 # desde la pestana Actions con "Run workflow".
 #
-# Requiere el secret METRICS_TOKEN (ver instrucciones en el chat de setup).
+# Requiere el secret METRICS_TOKEN (PAT con scope repo).
 
 name: Metrics
 
@@ -18,21 +20,25 @@ jobs:
   metrics:
     runs-on: ubuntu-latest
     steps:
-      # Lenguajes reales agregados sobre TODOS los repos (incluidos privados)
-      - name: Lenguajes
-        uses: lowlighter/metrics@latest
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          token: ${{ secrets.METRICS_TOKEN }}
-          user: Ragosorio
-          filename: assets/languages.svg
-          base: ""
-          config_timezone: America/Guatemala
-          plugin_languages: yes
-          plugin_languages_sections: most-used
-          plugin_languages_colors: 0:b890d9, 1:a97fd0, 2:9a6ec6, 3:8b5dbc, 4:7c4cb2, 5:6d3ba8
-          plugin_languages_details: bytes-size, percentage
-          plugin_languages_limit: 10
-          # HTML/CSS son mayoria por archivos generados y distorsionan el stack real
-          plugin_languages_ignored: html, css
-          # sin indepth: mide el contenido real de TODOS los repos, no solo
-          # los commits recientes (indepth se saltaba PHP y proyectos viejos)
+          node-version: "22"
+
+      - name: Generar SVGs
+        env:
+          GH_TOKEN: ${{ secrets.METRICS_TOKEN }}
+        run: node scripts/generate-stats.mjs
+
+      - name: Commitear si cambiaron
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/activity.svg assets/languages.svg
+          if git diff --staged --quiet; then
+            echo "Sin cambios"
+          else
+            git commit -m "Actualizar stats del perfil [skip ci]"
+            git push
+          fi

@@ -10,8 +10,6 @@ on:
   schedule:
     - cron: "0 12 * * *"
   workflow_dispatch:
-  push:
-    branches: [main]
 
 permissions:
   contents: write
@@ -30,7 +28,6 @@ jobs:
           template: classic
           base: header, activity, community, repositories
           config_timezone: America/Guatemala
-          config_theme: dark
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
 
@@ -43,7 +40,6 @@ jobs:
           filename: assets/languages.svg
           base: ""
           config_timezone: America/Guatemala
-          config_theme: dark
           plugin_languages: yes
           plugin_languages_sections: most-used
           plugin_languages_details: bytes-size, percentage
